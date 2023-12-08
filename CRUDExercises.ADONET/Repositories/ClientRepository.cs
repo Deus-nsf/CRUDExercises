@@ -11,7 +11,32 @@ namespace CRUDExercises.ADONET.Repositories;
 
 internal class ClientRepository
 {
-	private readonly List<Client> _clients = new();
+	public async Task AddClient(Client client)
+	{
+		
+	}
 
 
+	public async Task<List<Client>> GetClientList()
+	{
+		return new();
+	}
+
+
+	public async Task<Client> GetClientById(int id)
+	{
+		return null;
+	}
+
+
+	public async Task UpdateClient(int id, Dictionary<string, dynamic?> parameters)
+	{
+		
+	}
+
+
+	public async Task DeleteClient(int id)
+	{
+		
+	}
 }

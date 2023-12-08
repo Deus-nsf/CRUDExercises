@@ -34,17 +34,4 @@ internal class Client
 		Code_Postal = postalCode;
 		Ville = city;
 	}
-
-
-	public override string ToString()
-	{
-		return
-			$"Identifiant : {Id}\n" +
-			$"Nom : {Nom}\n" +
-			$"Prénom : {Prenom}\n" +
-			$"Date de naissance : {Date_Naissance.ToShortTimeString()}\n" +
-			$"Adresse : {Adresse}\n" +
-			$"Code Postal : {Code_Postal}\n" +
-			$"Ville : {Ville}\n";
-	}
 }
