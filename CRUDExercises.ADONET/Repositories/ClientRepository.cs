@@ -54,18 +54,10 @@ internal class ClientRepository
 	{
 		//// marche pas :(
 
-		//await _locationDbContext.Clients.Where(c => c.Id == id).ExecuteUpdateAsync
-		//(
-		//	(updates) =>
-		//	{
-		//		foreach (var parameter in parameters)
-		//		{
-		//			updates.SetProperty(parameter.Key, parameter.Value);
-		//		}
-					
-		//		return updates;			
-		//	}
-		//);
+		await _locationDbContext.Clients.Where(c => c.Id == id).ExecuteUpdateAsync
+		(
+			updates => updates.SetProperty(c => c.Nom, client.Nom)
+		);
 	}
 
 
