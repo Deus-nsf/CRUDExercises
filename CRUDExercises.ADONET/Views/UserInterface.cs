@@ -27,11 +27,11 @@ internal static class UserInterface
 			"3 - Mettre à jour un client.\n" +
 			"4 - Supprimer un client.\n\n" +
 
-			//"5 - Ajouter un véhicule en rentrant ses informations.\n" +
-			//"6 - Afficher la liste des véhicules.\n" +
-			//"7 - Afficher un véhicule spécifique.\n" +
-			//"8 - Mettre à jour un véhicule.\n" +
-			//"9 - Supprimer un véhicule.\n\n" +
+			//"5 - Ajouter une location en rentrant ses informations.\n" +
+			//"6 - Afficher la liste des locations.\n" +
+			//"7 - Afficher une location spécifique.\n" +
+			//"8 - Mettre à jour une location.\n" +
+			//"9 - Supprimer une location.\n\n" +
 
 			"Q - Quitter le programme.\n\n" +
 
@@ -201,7 +201,7 @@ internal static class UserInterface
 
 
 
-	public static void DisplayAddVehicle()
+	public static void DisplayAddLocation()
 	{
 		Console.WriteLine("Interface d'ajout d'un employé (prénom, nom, salaire)...\n");
 
@@ -226,7 +226,7 @@ internal static class UserInterface
 	}
 
 
-	public static void DisplayVehicleList()
+	public static void DisplayLocationList()
 	{
 		Console.WriteLine("Liste des employés :\n");
 
@@ -242,7 +242,7 @@ internal static class UserInterface
 	}
 
 
-	public static void DisplayVehicleById()
+	public static void DisplayLocationById()
 	{
 		Console.WriteLine("Affichage d'un employé par identifiant...\n");
 
@@ -259,13 +259,13 @@ internal static class UserInterface
 	}
 
 
-	public static void UpdateVehicle()
+	public static void UpdateLocation()
 	{
 
 	}
 
 
-	public static void DeleteVehicle()
+	public static void DeleteLocation()
 	{
 
 	}

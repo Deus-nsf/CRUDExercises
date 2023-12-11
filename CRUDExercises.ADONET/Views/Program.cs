@@ -29,19 +29,19 @@ while (exit == false)
 			break;
 
 		//case "5":
-		//	DisplayAddVehicle();
+		//	DisplayAddLocation();
 		//	break;
 		//case "6":
-		//	DisplayVehicleList();
+		//	DisplayLocationList();
 		//	break;
 		//case "7":
-		//	DisplayVehicleById();
+		//	DisplayLocationById();
 		//	break;
 		//case "8":
-		//	UpdateVehicle();
+		//	UpdateLocation();
 		//	break;
 		//case "9":
-		//	DeleteVehicle();
+		//	DeleteLocation();
 		//	break;
 
 		case "q":
