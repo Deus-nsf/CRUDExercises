@@ -110,8 +110,10 @@ internal class ClientController
 
 		try
 		{
-			//client = await _clientRepository.GetClientById(id);
-			await _clientRepository.UpdateClient(id, client);	
+			if (parameters.Count == 6)
+				await _clientRepository.UpdateClient(id, client);
+			else
+				await _clientRepository.UpdateClientMeta(id, parameters);			
 		}
 		catch (Exception ex)
 		{

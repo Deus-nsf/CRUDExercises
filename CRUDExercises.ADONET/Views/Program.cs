@@ -9,6 +9,7 @@ while (exit == false)
 {
 	DisplayWelcomeMessage();
 	string? choice = Console.ReadLine();
+	Console.WriteLine();
 
 	switch (choice)
 	{
@@ -46,11 +47,11 @@ while (exit == false)
 
 		case "q":
 		case "Q":
-			Console.WriteLine("\n\nSortie du programme...");
+			Console.WriteLine("Sortie du programme...");
 			exit = true;
 			break;
 		default:
-			Console.WriteLine("\n\nVotre choix ne correspond pas à une des possibilités, veuillez recommencer...");
+			Console.WriteLine("Votre choix ne correspond pas à une des possibilités, veuillez recommencer...");
 			break;
 	}
 }

@@ -50,14 +50,18 @@ internal class ClientRepository
 	}
 
 
-	public async Task UpdateClientMeta(int id, Dictionary<string, dynamic?> parameters)
+	public async Task UpdateClientMeta(int id, Dictionary<string, object?> parameters)
 	{
-		//// marche pas :(
+		StringBuilder updateQuery = new();
+		updateQuery.Append("UPDATE CLIENT SET");
 
-		await _locationDbContext.Clients.Where(c => c.Id == id).ExecuteUpdateAsync
-		(
-			updates => updates.SetProperty(c => c.Nom, client.Nom)
-		);
+		foreach (var parameter in parameters)
+			updateQuery.Append($" {parameter.Key.ToUpper()} = '{parameter.Value}',");
+
+		updateQuery.Remove(updateQuery.Length - 1, 1);
+		updateQuery.Append($" WHERE ID = {id}");
+
+		await _locationDbContext.Database.ExecuteSqlRawAsync(updateQuery.ToString());
 	}
 
 
