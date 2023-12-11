@@ -1,5 +1,5 @@
 ﻿
-using static CRUDExercises.ADONET.Views.UserInterface;
+using static CRUDExercises.EF.Views.UserInterface;
 
 
 Console.WriteLine("\nBienvenue dans la gestion de location de véhicules.\n");

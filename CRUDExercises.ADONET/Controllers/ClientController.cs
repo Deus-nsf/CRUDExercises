@@ -4,11 +4,10 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using CRUDExercises.EF.Repositories;
+using CRUDExercises.EF.LegacyEntities;
 
-using CRUDExercises.ADONET.Entities;
-using CRUDExercises.ADONET.Repositories;
-
-namespace CRUDExercises.ADONET.Controllers;
+namespace CRUDExercises.EF.Controllers;
 
 
 internal class ClientController

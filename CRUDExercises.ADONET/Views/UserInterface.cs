@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using CRUDExercises.ADONET.Controllers;
+using CRUDExercises.EF.Controllers;
 
-namespace CRUDExercises.ADONET.Views;
+namespace CRUDExercises.EF.Views;
 
 
 internal static class UserInterface

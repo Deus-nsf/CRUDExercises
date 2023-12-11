@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CRUDExercises.EF.LegacyEntities;
 
-using CRUDExercises.ADONET.Entities;
-
-namespace CRUDExercises.ADONET.Repositories;
+namespace CRUDExercises.EF.Repositories;
 
 
 internal class ClientRepository
