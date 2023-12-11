@@ -12,22 +12,45 @@ while (exit == false)
 
 	switch (choice)
 	{
+		case "0":
+			await DisplayAddClient();
+			break;
 		case "1":
-			DisplayAddClient();
+			await DisplayClientList();
 			break;
 		case "2":
-			DisplayClientList();
+			await DisplayClientById();
 			break;
 		case "3":
-			DisplayClientById();
+			UpdateClient();
 			break;
+		case "4":
+			DeleteClient();
+			break;
+
+		//case "5":
+		//	DisplayAddVehicle();
+		//	break;
+		//case "6":
+		//	DisplayVehicleList();
+		//	break;
+		//case "7":
+		//	DisplayVehicleById();
+		//	break;
+		//case "8":
+		//	UpdateVehicle();
+		//	break;
+		//case "9":
+		//	DeleteVehicle();
+		//	break;
+
 		case "q":
 		case "Q":
-            Console.WriteLine("\n\nSortie du programme...");
-            exit = true;
+			Console.WriteLine("\n\nSortie du programme...");
+			exit = true;
 			break;
 		default:
-            Console.WriteLine("\n\nVotre choix ne correspond pas à une des possibilités, veuillez recommencer...");
-            break;
+			Console.WriteLine("\n\nVotre choix ne correspond pas à une des possibilités, veuillez recommencer...");
+			break;
 	}
 }

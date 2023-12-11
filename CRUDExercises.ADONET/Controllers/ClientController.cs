@@ -16,6 +16,9 @@ internal class ClientController
 	private readonly ClientRepository _clientRepository = new();
 
 
+	/// <summary>
+	/// INSERT Object INTO Class
+	/// </summary>
 	public async Task<string> AddClient(string firstName,
 										string lastName,
 										DateTime birthDate,
@@ -23,8 +26,8 @@ internal class ClientController
 										string? postalCode = "",
 										string? city = "")
 	{
-		Client client = new(id: -1, firstName, lastName, birthDate, address, postalCode, city);
-		NullablePropertiesCheck(client);
+		Client client = new(id: 0, firstName, lastName, birthDate, address, postalCode, city);
+		NullablePropertiesCheck(client, Mode.CREATE);
 
 		try
 		{
@@ -39,6 +42,9 @@ internal class ClientController
 	}
 
 
+	/// <summary>
+	/// SELECT * FROM Class
+	/// </summary>
 	public async Task<List<string>> GetClientList()
 	{
 		List<Client> clients;
@@ -58,6 +64,9 @@ internal class ClientController
 	}
 
 
+	/// <summary>
+	/// SELECT * FROM Class WHERE Id = id
+	/// </summary>
 	public async Task<string> GetClientById(int id)
 	{
 		Client client;
@@ -74,6 +83,9 @@ internal class ClientController
 	}
 
 
+	/// <summary>
+	/// UPDATE Class SET (params) WHERE Id = id
+	/// </summary>
 	public async Task<string> UpdateClient(int id,
 											string firstName = "",
 											string lastName = "",
@@ -83,7 +95,7 @@ internal class ClientController
 											string? city = "")
 	{
 		Client client = new(id: -1, firstName, lastName, birthDate, address, postalCode, city);
-		NullablePropertiesCheck(client);
+		NullablePropertiesCheck(client, Mode.UPDATE);
 
 		Dictionary<string, dynamic?> parameters = RetrieveUpdateParameters(client);
 		//if (firstName != "") parameters.Add("Nom", firstName);
@@ -95,7 +107,7 @@ internal class ClientController
 
 		try
 		{
-			client = await _clientRepository.GetClientById(id);
+			//client = await _clientRepository.GetClientById(id);
 			await _clientRepository.UpdateClient(id, parameters);	
 		}
 		catch (Exception ex)
@@ -107,12 +119,28 @@ internal class ClientController
 	}
 
 
-	public async Task<bool> DeleteClient()
+	/// <summary>
+	/// DELETE FROM Class WHERE Id = id 
+	/// </summary>
+	public async Task<string> DeleteClient(int id)
 	{
-		return true;
+		try
+		{
+			await _clientRepository.DeleteClient(id);
+		}
+		catch (Exception ex)
+		{
+
+			return "Une erreur de suppression en base est survenue :\n" + ex.Message;
+		}
+
+		return $"Le client numéro {id} en base de donnée à été supprimé.";
 	}
 
 
+	/// <summary>
+	/// Returns a string representation of the current object's properties
+	/// </summary>
 	public string FormatClient(Client client)
 	{
 		return
@@ -127,15 +155,24 @@ internal class ClientController
 
 
 	/// <summary>
-	/// Switches nullable properties to null if their field is empty or default.
+	/// Switches nullable properties to null with the corresponding modeset.
 	/// Could be done via reflection, but for the sake of the exercise...
 	/// </summary>
 	/// <param name="client"></param>
-	private void NullablePropertiesCheck(Client client)
+	private void NullablePropertiesCheck(Client client, Mode mode)
 	{
-		client.Adresse = client.Adresse == "" ? null : client.Adresse;
-		client.Code_Postal = client.Code_Postal == "" ? null : client.Code_Postal;
-		client.Ville = client.Ville == "" ? null : client.Ville;
+		if (mode == Mode.CREATE)
+		{
+			client.Adresse = client.Adresse == "" ? null : client.Adresse;
+			client.Code_Postal = client.Code_Postal == "" ? null : client.Code_Postal;
+			client.Ville = client.Ville == "" ? null : client.Ville;
+		}
+		else if (mode == Mode.UPDATE)
+		{
+			client.Adresse = client.Adresse == " " ? null : client.Adresse;
+			client.Code_Postal = client.Code_Postal == " " ? null : client.Code_Postal;
+			client.Ville = client.Ville == " " ? null : client.Ville;
+		}
 	}
 
 
@@ -151,13 +188,18 @@ internal class ClientController
 		Dictionary<string, dynamic?> inputParams = new()
 		{
 			{"Nom", client.Nom},
-			{"Nom", client.Nom}
+			{"Prenom", client.Prenom},
+			{"Date_Naissance", client.Date_Naissance},
+			{"Adresse", client.Adresse},
+			{"Code_Postal", client.Code_Postal},
+			{"Ville", client.Ville}
 		};
+
 		Dictionary<string, dynamic?> outputParams = new();
 
 		for (int i = 0; i < inputParams.Count; i++)
 		{
-			dynamic? value = client.GetType().GetProperties();
+			dynamic? value = inputParams.ElementAt(i).Value;
 
 			if (value is null)
 				outputParams.Add(inputParams.ElementAt(i).Key, null);
@@ -168,3 +210,10 @@ internal class ClientController
 		return outputParams;
 	}
 }
+
+
+enum Mode
+{
+	CREATE = 1,
+	UPDATE = 2
+};
