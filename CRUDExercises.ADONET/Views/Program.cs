@@ -22,10 +22,10 @@ while (exit == false)
 			await DisplayClientById();
 			break;
 		case "3":
-			UpdateClient();
+			await UpdateClient();
 			break;
 		case "4":
-			DeleteClient();
+			await DeleteClient();
 			break;
 
 		//case "5":
