@@ -3,39 +3,74 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CRUDExercises.EF.LegacyEntities;
+
+using CRUDExercises.EF.Entities;
+
+using Microsoft.EntityFrameworkCore;
+//using CRUDExercises.EF.LegacyEntities;
 
 namespace CRUDExercises.EF.Repositories;
 
 
 internal class ClientRepository
 {
+	private readonly LocationDbContext _locationDbContext = new();
+
+
 	public async Task AddClient(Client client)
 	{
-		
+		await _locationDbContext.Clients.AddAsync(client);
+		await _locationDbContext.SaveChangesAsync();
 	}
 
 
 	public async Task<List<Client>> GetClientList()
 	{
-		return new();
+		return await _locationDbContext.Clients.ToListAsync();
 	}
 
 
-	public async Task<Client> GetClientById(int id)
+	public async Task<Client?> GetClientById(int id)
 	{
-		return null;
+		return await _locationDbContext.Clients.FindAsync(id);
 	}
 
 
-	public async Task UpdateClient(int id, Dictionary<string, dynamic?> parameters)
+	public async Task UpdateClient(int id, Client client)
 	{
-		
+		await _locationDbContext.Clients.Where(c => c.Id == id).ExecuteUpdateAsync
+		(
+			updates => updates.SetProperty(c => c.Nom, client.Nom)
+								.SetProperty(c => c.Prenom, client.Prenom)
+								.SetProperty(c => c.Date_Naissance, client.Date_Naissance)
+								.SetProperty(c => c.Adresse, client.Adresse)
+								.SetProperty(c => c.Code_Postal, client.Code_Postal)
+								.SetProperty(c => c.Ville, client.Ville)
+		);
+	}
+
+
+	public async Task UpdateClientMeta(int id, Dictionary<string, dynamic?> parameters)
+	{
+		//// marche pas :(
+
+		//await _locationDbContext.Clients.Where(c => c.Id == id).ExecuteUpdateAsync
+		//(
+		//	(updates) =>
+		//	{
+		//		foreach (var parameter in parameters)
+		//		{
+		//			updates.SetProperty(parameter.Key, parameter.Value);
+		//		}
+					
+		//		return updates;			
+		//	}
+		//);
 	}
 
 
 	public async Task DeleteClient(int id)
 	{
-		
+		await _locationDbContext.Clients.Where(c => c.Id == id).ExecuteDeleteAsync();
 	}
 }

@@ -5,7 +5,8 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using CRUDExercises.EF.Repositories;
-using CRUDExercises.EF.LegacyEntities;
+//using CRUDExercises.EF.LegacyEntities;
+using CRUDExercises.EF.Entities;
 
 namespace CRUDExercises.EF.Controllers;
 
@@ -68,12 +69,15 @@ internal class ClientController
 	/// </summary>
 	public async Task<string> GetClientById(int id)
 	{
-		Client client;
+		Client? client;
 
 		try
 		{
 			client = await _clientRepository.GetClientById(id);
-			return FormatClient(client);
+			if (client == null)
+				return $"Aucun client ne correspond à l'identifiant {id} en base";
+			else
+				return FormatClient(client);
 		}
 		catch (Exception ex)
 		{
@@ -93,7 +97,7 @@ internal class ClientController
 											string? postalCode = "",
 											string? city = "")
 	{
-		Client client = new(id: -1, firstName, lastName, birthDate, address, postalCode, city);
+		Client client = new(id, firstName, lastName, birthDate, address, postalCode, city);
 		NullablePropertiesCheck(client, Mode.UPDATE);
 
 		Dictionary<string, dynamic?> parameters = RetrieveUpdateParameters(client);
@@ -107,14 +111,14 @@ internal class ClientController
 		try
 		{
 			//client = await _clientRepository.GetClientById(id);
-			await _clientRepository.UpdateClient(id, parameters);	
+			await _clientRepository.UpdateClient(id, client);	
 		}
 		catch (Exception ex)
 		{
 			return "Une erreur de mise à jour en base est survenue :\n" + ex.Message;
 		}
 
-		return $"Le client {lastName} {firstName} à été mis à jour en base.";
+		return $"Le client numéro {id} à été mis à jour.";
 	}
 
 
@@ -133,7 +137,7 @@ internal class ClientController
 			return "Une erreur de suppression en base est survenue :\n" + ex.Message;
 		}
 
-		return $"Le client numéro {id} en base de donnée à été supprimé.";
+		return $"Le client numéro {id} à été supprimé.";
 	}
 
 

@@ -125,17 +125,18 @@ internal static class UserInterface
 	}
 
 
-	public static async Task UpdateClient()
+	public static async Task DisplayUpdateClient()
 	{
-		Console.WriteLine("Interface de mise à jour d'un client par identifiant...\n");
-		Console.WriteLine("Faites directement entrer pour ignorer un champ.\n");
+		Console.WriteLine("Interface de mise à jour d'un client par identifiant...");
+		Console.WriteLine("Faites directement entrer pour ignorer un champ.");
 		Console.WriteLine("Espace puis entrer pour écraser un champ optionnel.\n");
 
         Console.Write("Veuillez rentrer l'identifiant du client : ");
 		int id;
 		if (!int.TryParse(Console.ReadLine(), out id))
 		{
-			Console.WriteLine("Format d'identifiant non valide.");
+			Console.WriteLine("\nFormat d'identifiant non valide.");
+			Console.WriteLine("Echec de création d'un client.");
 			return;
 		}
 
@@ -183,7 +184,7 @@ internal static class UserInterface
 	}
 
 
-	public static async Task DeleteClient()
+	public static async Task DisplayDeleteClient()
 	{
 		Console.WriteLine("Interface de suppression d'un client par identifiant...\n");
 

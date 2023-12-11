@@ -28,7 +28,7 @@ public partial class Client
     public string Prenom { get; set; }
 
     [Column("DATE_NAISSANCE")]
-    public DateOnly Date_Naissance { get; set; }
+    public DateTime Date_Naissance { get; set; }
 
     [Column("ADRESSE")]
     [StringLength(150)]
@@ -44,4 +44,23 @@ public partial class Client
 
     [InverseProperty("IdClientNavigation")]
     public virtual ICollection<Location> Locations { get; set; } = new List<Location>();
+
+	public Client() { }
+
+	public Client(int id,
+                    string firstName,
+                    string lastName,
+                    DateTime birthDate,
+                    string? address,
+                    string? postalCode,
+                    string? city)
+    {
+        Id = id;
+        Nom = lastName;
+        Prenom = firstName;
+        Date_Naissance = birthDate;
+        Adresse = address;
+        Code_Postal = postalCode;
+        Ville = city;
+    }
 }
