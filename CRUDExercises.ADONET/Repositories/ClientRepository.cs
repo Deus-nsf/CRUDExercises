@@ -58,7 +58,7 @@ internal class ClientRepository
 		foreach (var parameter in parameters)
 			updateQuery.Append($" {parameter.Key.ToUpper()} = '{parameter.Value}',");
 
-		updateQuery.Remove(updateQuery.Length - 1, 1);
+		updateQuery.Remove(updateQuery.Length - 1, 1); 
 		updateQuery.Append($" WHERE ID = {id}");
 
 		await _locationDbContext.Database.ExecuteSqlRawAsync(updateQuery.ToString());
