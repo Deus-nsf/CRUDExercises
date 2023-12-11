@@ -113,7 +113,7 @@ internal class ClientController
 			if (parameters.Count == 6)
 				await _clientRepository.UpdateClient(id, client);
 			else
-				await _clientRepository.UpdateClientMeta(id, parameters);			
+				await _clientRepository.UpdateClientSpecificUnsafe(id, parameters);			
 		}
 		catch (Exception ex)
 		{

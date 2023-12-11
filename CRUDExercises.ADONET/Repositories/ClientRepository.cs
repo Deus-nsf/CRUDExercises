@@ -50,7 +50,7 @@ internal class ClientRepository
 	}
 
 
-	public async Task UpdateClientMeta(int id, Dictionary<string, object?> parameters)
+	public async Task UpdateClientSpecificUnsafe(int id, Dictionary<string, dynamic?> parameters)
 	{
 		StringBuilder updateQuery = new();
 		updateQuery.Append("UPDATE CLIENT SET");
