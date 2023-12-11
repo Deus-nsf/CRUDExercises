@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CRUDExercises.EF.Entities;
 
-public partial class DBContext : DbContext
+public partial class LocationDbContext : DbContext
 {
-    public DBContext()
+    public LocationDbContext()
     {
     }
 
-    public DBContext(DbContextOptions<DBContext> options)
+    public LocationDbContext(DbContextOptions<LocationDbContext> options)
         : base(options)
     {
     }
