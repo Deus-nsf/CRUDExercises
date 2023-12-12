@@ -13,7 +13,7 @@ namespace CRUDExercises.EF.Views;
 internal static class UserInterface
 {
 	private static ClientController _clientController => new ClientController();
-	//public static EmployeeController GetEmployeeController() => _employeeController;
+	private static LocationController _locationController => new LocationController();
 
 
 	public static void DisplayWelcomeMessage()
@@ -27,11 +27,11 @@ internal static class UserInterface
 			"3 - Mettre à jour un client.\n" +
 			"4 - Supprimer un client.\n\n" +
 
-			//"5 - Ajouter une location en rentrant ses informations.\n" +
-			//"6 - Afficher la liste des locations.\n" +
-			//"7 - Afficher une location spécifique.\n" +
-			//"8 - Mettre à jour une location.\n" +
-			//"9 - Supprimer une location.\n\n" +
+			"5 - Ajouter une location en rentrant ses informations.\n" +
+			"6 - Afficher la liste des locations.\n" +
+			"7 - Afficher une location spécifique.\n" +
+			"8 - Mettre à jour une location.\n" +
+			"9 - Supprimer une location.\n\n" +
 
 			"Q - Quitter le programme.\n\n" +
 
@@ -42,10 +42,13 @@ internal static class UserInterface
 
 	public static async Task DisplayAddClient()
 	{
-		Console.WriteLine("Interface d'ajout d'un client (prénom, nom, etc...).\n");
+		Console.WriteLine("Interface d'ajout d'un client (prénom, nom, etc...).");
+		Console.WriteLine("Faites directement entrer pour ignorer un champ optionnel.\n");
+
 
 		Console.Write("Veuillez rentrer le nom (obligatoire) : ");
 		string lastName = Console.ReadLine() ?? "";
+
 
 		Console.Write("Veuillez rentrer le prénom (obligatoire) : ");
 		string firstName = Console.ReadLine() ?? "";
@@ -57,6 +60,7 @@ internal static class UserInterface
 			return;
 		}
 
+
 		Console.Write("Veuillez rentrer la date de naissance (JJ/MM/AAAA) (obligatoire) : ");
 		DateTime birthDate;
 
@@ -67,11 +71,14 @@ internal static class UserInterface
 			return;
 		}
 
+
 		Console.Write("Veuillez rentrer l'adresse (pas de code postal ou ville) (optionnel) : ");
 		string? address = Console.ReadLine();
 
+
 		Console.Write("Veuillez rentrer le code postal (optionnel) : ");
 		string? postalCode = Console.ReadLine();
+
 
 		Console.Write("Veuillez rentrer la ville (optionnel) : ");
 		string? city = Console.ReadLine();
@@ -129,22 +136,27 @@ internal static class UserInterface
 	{
 		Console.WriteLine("Interface de mise à jour d'un client par identifiant...");
 		Console.WriteLine("Faites directement entrer pour ignorer un champ.");
-		Console.WriteLine("Espace puis entrer pour écraser un champ optionnel.\n");
+		Console.WriteLine("Espace puis entrer pour écraser un champ nullable à null.\n");
 
-        Console.Write("Veuillez rentrer l'identifiant du client : ");
+
+        Console.Write("Veuillez rentrer l'identifiant du client à modifier (obligatoire) : ");
 		int id;
+
 		if (!int.TryParse(Console.ReadLine(), out id))
 		{
 			Console.WriteLine("\nFormat d'identifiant non valide.");
-			Console.WriteLine("Echec de création d'un client.");
+			Console.WriteLine("Echec de modification d'un client.");
 			return;
 		}
+
 
         Console.Write("Veuillez rentrer le nom : ");
 		string lastName = Console.ReadLine() ?? "";
 
+
 		Console.Write("Veuillez rentrer le prénom : ");
 		string firstName = Console.ReadLine() ?? "";
+
 
 		Console.Write("Veuillez rentrer la date de naissance (JJ/MM/AAAA) : ");
 		DateTime birthDate = new();
@@ -154,17 +166,20 @@ internal static class UserInterface
 			!DateTime.TryParse(birthDateString, new CultureInfo("fr-FR"), out birthDate))
 		{
 			Console.WriteLine("\nFormat de date non valide.");
-			Console.WriteLine("Echec de création d'un client.");
+			Console.WriteLine("Echec de modification d'un client.");
 			return;
 		}
 
-		Console.Write("Veuillez rentrer l'adresse (pas de code postal ou ville) (optionnel) : ");
+
+		Console.Write("Veuillez rentrer l'adresse (pas de code postal ou ville) (nullable) : ");
 		string? address = Console.ReadLine();
 
-		Console.Write("Veuillez rentrer le code postal (optionnel) : ");
+
+		Console.Write("Veuillez rentrer le code postal (nullable) : ");
 		string? postalCode = Console.ReadLine();
 
-		Console.Write("Veuillez rentrer la ville (optionnel) : ");
+
+		Console.Write("Veuillez rentrer la ville (nullable) : ");
 		string? city = Console.ReadLine();
 
 
@@ -200,54 +215,111 @@ internal static class UserInterface
 		Console.WriteLine(deleteMessage);
 	}
 
+	// -----------------------------------------------
+	// -------------------LOCATION--------------------
+	// -----------------------------------------------
 
-
-	public static void DisplayAddLocation()
+	public static async Task DisplayAddLocation()
 	{
-		Console.WriteLine("Interface d'ajout d'un employé (prénom, nom, salaire)...\n");
+		Console.WriteLine("Interface d'ajout d'une location (client, véhicule...).");
+		Console.WriteLine("Faites directement entrer pour ignorer un champ optionnel.\n");
 
-		Console.Write("Veuillez rentrer le prénom : ");
-		string? firstName = Console.ReadLine();
 
-		Console.Write("Veuillez rentrer le nom : ");
-		string? lastName = Console.ReadLine();
+		Console.Write("Veuillez rentrer l'identifiant du client (optionnel) : ");
+		string idClientString = Console.ReadLine() ?? "";
+		int idClient = 0;
 
-		Console.Write("Veuillez rentrer le salaire : ");
-		double salary;
-		if (!double.TryParse(Console.ReadLine(), out salary))
+		if(!(idClientString == "") && !int.TryParse(idClientString, out idClient))
 		{
-			Console.WriteLine("Format de salaire non valide");
-			Console.WriteLine("Echec de création d'un employé.");
+			Console.WriteLine("\nFormat d'identifiant non valide.");
+			Console.WriteLine("Echec de création d'une location.");
 			return;
 		}
 
-		Console.WriteLine("\nCreation d'un employé en cours...");
-		//string? creationMessage = _employeeController.AddEmployee(firstName, lastName, salary);
-		//Console.WriteLine(creationMessage);
+		
+		Console.Write("Veuillez rentrer l'identifiant du véhicule (optionnel) : ");
+		string idVehiculeString = Console.ReadLine() ?? "";
+		int idVehicule = 0;
+
+		if(!(idVehiculeString == "") && !int.TryParse(idVehiculeString, out idVehicule))
+		{
+			Console.WriteLine("\nFormat d'identifiant non valide.");
+			Console.WriteLine("Echec de création d'une location.");
+			return;
+		}
+
+
+		Console.Write("Veuillez rentrer le nombre de kilomètres (obligatoire) : ");
+		string kilometresString = Console.ReadLine() ?? "";
+		int nbKm = 0;
+
+		if((kilometresString == "") || !int.TryParse(kilometresString, out nbKm))
+		{
+			Console.WriteLine("\nFormat d'identifiant non valide.");
+			Console.WriteLine("Echec de création d'une location.");
+			return;
+		}
+
+
+		Console.Write("Veuillez rentrer la date de début de location (JJ/MM/AAAA) (obligatoire) : ");
+		string dateDebutString = Console.ReadLine() ?? "";
+		DateTime dateDebut;
+
+		if ((dateDebutString == "") || !DateTime.TryParse(dateDebutString, new CultureInfo("fr-FR"), out dateDebut))
+		{
+			Console.WriteLine("\nFormat de date non valide.");
+			Console.WriteLine("Echec de création d'une location.");
+			return;
+		}
+
+
+		Console.Write("Veuillez rentrer la date de fin de location (JJ/MM/AAAA) (optionnel) : ");
+		string dateFinString = Console.ReadLine() ?? "";
+		DateTime dateFin = default;
+
+		if (!(dateFinString == "") && !DateTime.TryParse(dateFinString, new CultureInfo("fr-FR"), out dateFin))
+		{
+			Console.WriteLine("\nFormat de date non valide.");
+			Console.WriteLine("Echec de création d'une location.");
+			return;
+		}
+
+
+		Console.WriteLine("\nCreation d'une location en cours...");
+		string? creationMessage = await _locationController.AddLocation
+		(
+			idClient,
+			idVehicule,
+			nbKm,
+			dateDebut,
+			dateFin
+		);
+
+		Console.WriteLine(creationMessage);
 	}
 
 
-	public static void DisplayLocationList()
+	public static async Task DisplayLocationList()
 	{
-		Console.WriteLine("Liste des employés :\n");
+		Console.WriteLine("Liste des locations :\n");
 
-		//string employees = _employeeController.GetEmployees();
+		List<string> locations = await _locationController.GetLocationList();
 
-		//if (String.IsNullOrWhiteSpace(employees))
-		//{
-		//	Console.WriteLine("Vous n'avez pas encore saisi d'employés.\n");
-		//	return;
-		//}
+		if (locations.Count == 0)
+		{
+			Console.WriteLine("Vous n'avez pas encore saisi de locations.\n");
+			return;
+		}
 
-		//Console.WriteLine(employees);
+		locations.ForEach(Console.WriteLine);
 	}
 
 
-	public static void DisplayLocationById()
+	public static async Task DisplayLocationById()
 	{
-		Console.WriteLine("Affichage d'un employé par identifiant...\n");
+		Console.WriteLine("Affichage d'une location par identifiant...\n");
 
-		Console.Write("Veuillez rentrer l'identifiant de l'employé : ");
+		Console.Write("Veuillez rentrer l'identifiant de la location : ");
 		int id;
 		if (!int.TryParse(Console.ReadLine(), out id))
 		{
@@ -255,19 +327,125 @@ internal static class UserInterface
 			return;
 		}
 
-		//string? searchMessage = _employeeController.GetEmployeeById(id);
-		//Console.WriteLine(searchMessage);
+		string? searchMessage = await _locationController.GetLocationById(id);
+		Console.WriteLine(searchMessage);
 	}
 
 
-	public static void UpdateLocation()
+	public static async Task UpdateLocation()
 	{
+		Console.WriteLine("Interface d'ajout d'une location (client, véhicule...).");
+		Console.WriteLine("Faites directement entrer pour ignorer un champ.");
+		Console.WriteLine("Espace puis entrer pour écraser un champ nullable à null.\n");
 
+
+		Console.Write("Veuillez rentrer l'identifiant de la location à modifier (obligatoire) : ");
+		int id;
+
+		if (!int.TryParse(Console.ReadLine(), out id))
+		{
+			Console.WriteLine("\nFormat d'identifiant non valide.");
+			Console.WriteLine("Echec de modification d'une location.");
+			return;
+		}
+
+
+		Console.Write("Veuillez rentrer l'identifiant du client (nullable) : ");
+		string idClientString = Console.ReadLine() ?? "";
+		int idClient = 0;
+
+		if (idClientString == " ")
+			idClient = -1;
+		else if (!(idClientString == "") && !int.TryParse(idClientString, out idClient))
+		{
+			Console.WriteLine("\nFormat d'identifiant non valide.");
+			Console.WriteLine("Echec de modification d'une location.");
+			return;
+		}
+
+		
+		Console.Write("Veuillez rentrer l'identifiant du véhicule (nullable) : ");
+		string idVehiculeString = Console.ReadLine() ?? "";
+		int idVehicule = 0;
+
+		if (idVehiculeString == " ")
+			idVehicule = -1;
+		else if(!(idVehiculeString == "") && !int.TryParse(idVehiculeString, out idVehicule))
+		{
+			Console.WriteLine("\nFormat d'identifiant non valide.");
+			Console.WriteLine("Echec de modification d'une location.");
+			return;
+		}
+
+
+		Console.Write("Veuillez rentrer le nombre de kilomètres : ");
+		string kilometresString = Console.ReadLine() ?? "";
+		int nbKm = 0;
+
+		if(!(kilometresString == "") || !int.TryParse(kilometresString, out nbKm))
+		{
+			Console.WriteLine("\nFormat d'identifiant non valide.");
+			Console.WriteLine("Echec de modification d'une location.");
+			return;
+		}
+
+
+		Console.Write("Veuillez rentrer la date de début de location (JJ/MM/AAAA) : ");
+		string dateDebutString = Console.ReadLine() ?? "";
+		DateTime dateDebut = default;
+
+		if (!string.IsNullOrEmpty(dateDebutString) && 
+			!DateTime.TryParse(Console.ReadLine(), new CultureInfo("fr-FR"), out dateDebut))
+		{
+			Console.WriteLine("\nFormat de date non valide.");
+			Console.WriteLine("Echec de modification d'une location.");
+			return;
+		}
+
+
+		Console.Write("Veuillez rentrer la date de fin de location (JJ/MM/AAAA) (nullable) : ");
+		string dateFinString = Console.ReadLine() ?? "";
+		DateTime dateFin = default;
+
+		if (dateFinString == " ")
+			dateFin = DateTime.MaxValue;
+		else if (!string.IsNullOrEmpty(dateFinString) &&
+			!DateTime.TryParse(dateFinString, new CultureInfo("fr-FR"), out dateFin))
+		{
+			Console.WriteLine("\nFormat de date non valide.");
+			Console.WriteLine("Echec de modification d'une location.");
+			return;
+		}
+
+
+		Console.WriteLine("\nModification d'une location en cours...");
+		string? creationMessage = await _locationController.UpdateLocation
+		(
+			id,
+			idClient,
+			idVehicule,
+			nbKm,
+			dateDebut,
+			dateFin
+		);
+
+		Console.WriteLine(creationMessage);
 	}
 
 
-	public static void DeleteLocation()
+	public static async Task DeleteLocation()
 	{
+		Console.WriteLine("Interface de suppression d'une location par identifiant...\n");
 
+		Console.Write("Veuillez rentrer l'identifiant de la location : ");
+		int id;
+		if (!int.TryParse(Console.ReadLine(), out id))
+		{
+			Console.WriteLine("Format d'identifiant non valide.");
+			return;
+		}
+
+		string? deleteMessage = await _locationController.DeleteLocation(id);
+		Console.WriteLine(deleteMessage);
 	}
 }

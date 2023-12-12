@@ -67,6 +67,7 @@ internal class ClientRepository
 
 	public async Task DeleteClient(int id)
 	{
+		await _locationDbContext.Locations.Where(l => l.Id_Client == id).ExecuteDeleteAsync();
 		await _locationDbContext.Clients.Where(c => c.Id == id).ExecuteDeleteAsync();
 	}
 }

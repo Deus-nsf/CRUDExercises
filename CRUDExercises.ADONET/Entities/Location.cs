@@ -16,21 +16,38 @@ public partial class Location
     public int Id { get; set; }
 
     [Column("ID_CLIENT")]
-    public int? IdClient { get; set; }
+    public int? Id_Client { get; set; }
 
     [Column("ID_VEHICULE")]
-    public int? IdVehicule { get; set; }
+    public int? Id_Vehicule { get; set; }
 
     [Column("NB_KM")]
-    public int NbKm { get; set; }
+    public int Nb_Km { get; set; }
 
     [Column("DATE_DEBUT")]
-    public DateOnly DateDebut { get; set; }
+    public DateTime Date_Debut { get; set; }
 
     [Column("DATE_FIN")]
-    public DateOnly? DateFin { get; set; }
+    public DateTime? Date_Fin { get; set; }
 
-    [ForeignKey("IdClient")]
+    [ForeignKey("Id_Client")]
     [InverseProperty("Locations")]
     public virtual Client IdClientNavigation { get; set; }
+
+	public Location() { }
+
+	public Location(int id,
+                    int? idClient,
+                    int? idVehicule,
+                    int nbKm,
+                    DateTime dateDebut,
+                    DateTime? dateFin)
+    {
+        Id = id;
+        Id_Client = idClient;
+        Id_Vehicule = idVehicule;
+        Nb_Km = nbKm;
+        Date_Debut = dateDebut;
+        Date_Fin = dateFin;
+    }
 }

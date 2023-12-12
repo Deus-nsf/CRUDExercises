@@ -29,21 +29,21 @@ while (exit == false)
 			await DisplayDeleteClient();
 			break;
 
-		//case "5":
-		//	DisplayAddLocation();
-		//	break;
-		//case "6":
-		//	DisplayLocationList();
-		//	break;
-		//case "7":
-		//	DisplayLocationById();
-		//	break;
-		//case "8":
-		//	UpdateLocation();
-		//	break;
-		//case "9":
-		//	DeleteLocation();
-		//	break;
+		case "5":
+			await DisplayAddLocation();
+			break;
+		case "6":
+			await DisplayLocationList();
+			break;
+		case "7":
+			await DisplayLocationById();
+			break;
+		case "8":
+			await UpdateLocation();
+			break;
+		case "9":
+			await DeleteLocation();
+			break;
 
 		case "q":
 		case "Q":

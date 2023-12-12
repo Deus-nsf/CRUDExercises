@@ -22,9 +22,9 @@ internal class ClientController
 	public async Task<string> AddClient(string firstName,
 										string lastName,
 										DateTime birthDate,
-										string? address = "",
-										string? postalCode = "",
-										string? city = "")
+										string? address,
+										string? postalCode,
+										string? city)
 	{
 		Client client = new(id: 0, firstName, lastName, birthDate, address, postalCode, city);
 		NullablePropertiesCheck(client, Mode.CREATE);
@@ -101,12 +101,6 @@ internal class ClientController
 		NullablePropertiesCheck(client, Mode.UPDATE);
 
 		Dictionary<string, dynamic?> parameters = RetrieveUpdateParameters(client);
-		//if (firstName != "") parameters.Add("Nom", firstName);
-		//if (lastName != "") parameters.Add("Prenom", lastName);
-		//if (birthDate != default) parameters.Add("Date_Naissance", birthDate);
-		//if (address != null) parameters.Add("Adresse", address);
-		//if (postalCode != null) parameters.Add("Code_Postal", postalCode);
-		//if (city != null) parameters.Add("Ville", city);
 
 		try
 		{
